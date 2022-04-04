@@ -10,7 +10,7 @@ app.use(cors());
 const users = [];
 
 function checksExistsUserAccount(request, response, next) {
-  const { username } = request.header;
+  const { username } = request.headers;
   
   const user = users.find((user) => user.username === username);
 
@@ -33,7 +33,7 @@ function checksCreateTodosUserAvailability(request, response, next) {
 }
 
 function checksTodoExists(request, response, next) {
-  const { username } = request.header;
+  const { username } = request.headers;
   const { id } = request.params;
 
   const user = users.find(user => user.username === username);
@@ -49,8 +49,8 @@ function checksTodoExists(request, response, next) {
   if(!todo)
     return response.status(404).json({error: "Todo doesn't exists!"});
   
-  request.todo = todo;
   request.user = user;
+  request.todo = todo;
 
   return next();
 
